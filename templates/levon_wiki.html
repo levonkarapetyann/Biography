@@ -1,4 +1,4 @@
-{% extends 'basic.html' %}
+{% extends 'support_chat.html' %}
 
 {% block title %}
 Levon Karapetyan
@@ -6,7 +6,7 @@ Levon Karapetyan
 
 {% block stylesheet %}
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-<link rel="stylesheet" href="{{ url_for('static', filename='css/levon_wiki.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/levon_wiki.css') }}?v=1.0">
 {% endblock %}
 
 {% block body %}
@@ -39,8 +39,6 @@ Levon Karapetyan
       </div>
    </div>
 </div>
-{% endblock %}
-
 {% block script %}
 <script>document.addEventListener('mousemove', (e) => {
     const el = document.querySelector('.cursor');
@@ -48,3 +46,5 @@ Levon Karapetyan
     el.style.setProperty('--y', e.clientY + 'px');
 });</script>
 {% endblock %}
+{% endblock %}
+
