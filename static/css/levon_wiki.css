@@ -303,3 +303,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
 }
+
+#chat-messages::-webkit-scrollbar {
+    display: none;
+}
