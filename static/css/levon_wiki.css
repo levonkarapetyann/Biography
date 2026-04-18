@@ -7,6 +7,10 @@
    font-family: "Popins", sans-serif;
 }
 
+html {
+   scroll-behavior: smooth;
+}
+
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
     width: 0;
@@ -19,7 +23,6 @@ body {
 }
 
 .fix {
-   border: 2px solid purple;
    color: #e2e8f0;
    margin: 50px;
    position: sticky;
@@ -29,6 +32,57 @@ body {
    padding: 20px;
 }
 
+.nav-menu {
+   position: fixed;
+   color: #94a3b8 !important;
+   width: 300px;
+   font-size: 40px;
+   left: 100px;
+   top: 450px;
+   border-radius: 45px;
+}
+
+.nav-link {
+   display: flex;
+   align-items: center;
+   text-decoration: none;
+   margin-bottom: 20px;
+   transition: all 0.3s ease;
+}
+
+.nav-line {
+   height: 1px;
+   width: 30px;
+   background-color: #64748b;
+   margin-right: 15px;
+   transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.nav-text {
+   font-size: 0.74rem;
+   font-weight: bold;
+   letter-spacing: 0.1rem;
+   color: #64748b;
+   transition: color 0.3s ease;
+}
+
+.nav-link:hover .nav-text {
+   color: #e2e8f0;
+}
+
+.nav-link:hover .nav-line {
+   width: 60px;
+   background-color: #e2e8h0;
+}
+
+.nav-link.active .nav-line {
+   width: 60px;
+   background-color: #e2e8f0;
+}
+
+.nav-link.active .nav-text {
+   color: #e2e8f0;
+}
 .fix p {
    color: #94a3b8;
    line-height: 1.625;
@@ -45,11 +99,10 @@ body {
 
 .about1, .about2, .about3 {
    margin-bottom: 1rem;
-   padding: 10px;
+   padding:  5px;
    max-width: 600px;
    line-height: 1,6;
    text-align: justify; 
-   border: 2px solid purple;
    margin-left: auto;
    margin-right: 10px;
    font-size: 16px;
@@ -69,13 +122,13 @@ body {
 }
 
 .study1, .study2, .study3 {
-   padding: 10px;
+   padding: 0px;
    max-width: 600px;
-   border: 2px solid purple;
-   font-size: 16px;
+   font-size: 18px;
    margin-left: auto;
    margin-right: 10px;
    display: flex;
+   color: #e2e8f0 !important;
 }
 
 .study1 {
@@ -85,15 +138,14 @@ body {
 }
 
 .about-study1 {
-   margin-top: 1rem;
+   margin-top: o.5rem;
 }
 
 .about-study1, .about-study2, .about-study3 {
-   margin-bottom: 1rem;
-   padding: 10px;
+   margin-bottom: 0.5rem;
+   padding: 5px;
    max-width: 600px;
    text-align: justify;
-   border: 2px solid purple;
    font-size: 16px;
    margin-left: auto;
    margin-right: 10px;
@@ -101,6 +153,143 @@ body {
    justify-content: center;  
 }
 
+#ach1, #ach2, #ach3, #ach4, #ach-title {
+   margin-bottom: 0.5rem;
+   padding: 5px;
+   max-width: 600px;
+   text-align: justify;
+   font-size: 16px;
+   margin-left: auto;
+   margin-right: 10px;
+   display: flex;
+   justify-content: flex-start;
+   color: #94a3b8; 
+}
+
+#ach-title {
+   display: flex;
+   justify-content: flex-start !important;
+   padding-top: 30px !important;
+   color: #e2e8f0;
+}
+
+.skills {
+   margin-bottom: 0.5rem;
+   padding: 5px;
+   max-width: 600px;
+   font-size: 16px;
+   margin-left: 33%;
+   display: flex;
+   flex-direction: column;
+   color: #e2e8f0;
+}
+
+.skills h2 {
+   margin-bottom: 25px;
+   color: #e2e8f0;
+}
+
+.skil {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 10px;
+   list-style-none: none;
+   padding: 0px;
+}
+
+.skil li {
+   font-size: 16px;
+   position: relative;
+   padding-left: 15px;
+   color: #94a3b8;
+}
+
+.skill li::before {
+   content: "•";
+   position: relative;
+   left: 0;
+   color: #64ffda;
+}
+.work-experience, .work-experience2 {
+   display: flex;
+   gap: 20px;
+   padding: 20px;
+   background-color: #0d111d;;
+   color: #94a3b8;
+   font-family: sans-serif;
+   border-radius: 8px;
+   max-width: 600px;
+   margin-top: 50px;
+   margin-right: 10px;
+   margin-left: auto;
+}
+
+.date, .date2 {
+   flex: 0 0 150px;
+   font-size: 0.8rem;
+   font-weight: bold;
+   color: #64748b;
+   padding-top: 5px;
+}
+
+.experience h3 h4 {
+   margin: 0 0 10px 0;
+   color: #e2e8f0;
+   font-size: 1.1rem;
+}
+
+.experience2 h3 h4 {
+   margin: 0 0 10px 0;
+   color: #e2e8f0;
+   font-size: 1.1rem;
+}
+
+.experience .hov:hover {
+   color: #5eead4;
+}
+
+.experience2 .hov:hover {
+   color: #5eead4;
+}
+
+
+.experience p {
+   font-size: 0.95rem;
+   line-height: 1.5;
+   margin-bottom: 15px;
+}
+
+.experience2 p {
+   font-size: 0.95rem;
+   line-height: 1.5;
+   margin-bottom: 15px;
+}
+
+.tags {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 8px;
+}
+
+.tag {
+   background-color: rgba(45, 212, 191, 0.1);
+   color: #5eead4;
+   padding: 4px 12px;
+   border-radius: 20px;
+   font-size: 0.75rem;
+   font-weight: bold;
+}
+
+
+img {
+   position: fixed;
+   color: #94a3b8 !important;
+   width: 300px;
+   font-size: 40px;
+   left: 350px;
+   top: 350px;
+   border-radius: 45px;
+}
 
 .bxl-linkedin-square {
    position: fixed;
