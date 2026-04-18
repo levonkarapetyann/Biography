@@ -13,13 +13,13 @@
         <div class="chat-header">
             <div class="user-info">
                 <div class="status-dot"></div>
-                <span>Levon's Assistant</span>
+               <span>Assistant Levon</span>
             </div>
             <button id="close-chat">&times;</button>
         </div>
         <div class="chat-messages" id="chat-messages">
             <div class="msg bot">
-                Hi there! 👋 I'm Levon's virtual assistant. How can I help you today?
+                Hi there! 👋 I'm Levon virtual assistant. How can I help you today?
             </div>
         </div>
         <div class="chat-input-area">
@@ -93,6 +93,18 @@
         });
     }
 });</script>
+<script>
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function() {
+        const currentActive = document.querySelector('.nav-link.active');
+        if (currentActive) {
+            currentActive.classList.remove('active');
+        }
+
+        this.classList.add('active');
+    });
+});
+</script>
 </body>
 </html>
 
