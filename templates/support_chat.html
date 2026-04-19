@@ -35,64 +35,74 @@
         <svg viewBox="0 0 24 24" width="30" height="30" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
     </button>
 </div>
-<script>document.addEventListener('DOMContentLoaded', () => {
-    const windowChat = document.getElementById('chat-window');
-    const input = document.getElementById('user-msg');
-    const messagesContainer = document.getElementById('chat-messages');
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const chatWindow = document.getElementById('chat-window');
+    const chatTrigger = document.getElementById('chat-trigger');
+    const closeChat = document.getElementById('close-chat');
     const sendBtn = document.getElementById('send-msg');
-    const closeBtn = document.getElementById('close-chat');
+    const input = document.getElementById('user-msg');
+    const messagesBox = document.getElementById('chat-messages');
 
-    // 1. Обработка клика через делегирование (решает проблему "некликабельности")
-    document.addEventListener('click', (e) => {
-        const trigger = e.target.closest('#chat-trigger');
-        if (trigger) {
-            console.log("Клик по кнопке чата зафиксирован!");
-            windowChat.classList.toggle('hidden');
-        }
-    });
+    let userName = "";
+    let userEmail = "";
+    let firstMessage = "";
 
-    // 2. Закрытие чата
-    if (closeBtn) {
-        closeBtn.onclick = () => {
-            windowChat.classList.add('hidden');
-        };
+    function addMessage(text, sender) {
+        const div = document.createElement('div');
+        div.className = `msg ${sender}`;
+        div.textContent = text;
+        messagesBox.appendChild(div);
+        messagesBox.scrollTop = messagesBox.scrollHeight;
     }
 
-    // 3. Функция отправки сообщения
     function sendMessage() {
         const text = input.value.trim();
         if (!text) return;
 
-        // Сообщение пользователя
-        const userMsg = document.createElement('div');
-        userMsg.className = 'msg user';
-        userMsg.textContent = text;
-        messagesContainer.appendChild(userMsg);
-
+        addMessage(text, 'user');
         input.value = '';
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-        // Ответ бота (через секунду)
-        setTimeout(() => {
-            const botMsg = document.createElement('div');
-            botMsg.className = 'msg bot';
-            botMsg.textContent = "Thanks! Levon will see your message soon.";
-            messagesContainer.appendChild(botMsg);
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 1000);
-    }
-
-    // 4. Слушатели для отправки
-    if (sendBtn) {
-        sendBtn.onclick = sendMessage;
-    }
-
-    if (input) {
-        input.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
+        if (!userName) {
+            firstMessage = text;
+            userName = "waiting";
+            setTimeout(() => addMessage("How should I address you?", "bot"), 600);
+            return;
+        }
+        if (userName === "waiting") { 
+            userName = text;
+            setTimeout(() => addMessage(`Nice to meet you, ${userName}! Please provide your email address so we can contact you.`, "bot"), 600);
+            return;
+        }
+        if (!userEmail) {
+            if (!text.includes('@')) {
+                addMessage("Enter a valid email:", "bot");
+                return;
+            }
+            userEmail = text;
+            addMessage("Thank you! I'll get back to you soon.", "bot");
+            
+            fetch('/send_message', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({message: firstMessage, user_name: userName, user_email: userEmail})
+            });
+            return;
+        }
+        
+        fetch('/send_message', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({message: text, user_name: userName, user_email: userEmail})
         });
     }
-});</script>
+
+    chatTrigger.onclick = () => chatWindow.classList.toggle('hidden');
+    closeChat.onclick = () => chatWindow.classList.add('hidden');
+    sendBtn.onclick = sendMessage;
+    input.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
+});
+</script>
 <script>
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', function() {
