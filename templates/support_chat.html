@@ -19,7 +19,7 @@
         </div>
         <div class="chat-messages" id="chat-messages">
             <div class="msg bot">
-                Hi there! 👋 I'm Levon virtual assistant. How can I help you today?
+                Hi there! 👋 I'm Levon virtual assistant. Please introduce yourself!
             </div>
         </div>
         <div class="chat-input-area">
@@ -56,6 +56,21 @@ document.addEventListener('DOMContentLoaded', () => {
         messagesBox.scrollTop = messagesBox.scrollHeight;
     }
 
+    function sendToServer(name, email, message) {
+        fetch('/send_message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_name: name,
+                user_email: email,
+                message: message
+            })
+        })
+        .then(res => res.json())
+        .then(data => console.log('Send:', data))
+        .catch(err => console.error('Error:', err));
+    }
+
     function sendMessage() {
         const text = input.value.trim();
         if (!text) return;
@@ -64,37 +79,30 @@ document.addEventListener('DOMContentLoaded', () => {
         input.value = '';
 
         if (!userName) {
-            firstMessage = text;
-            userName = "waiting";
-            setTimeout(() => addMessage("How should I address you?", "bot"), 600);
-            return;
-        }
-        if (userName === "waiting") { 
             userName = text;
-            setTimeout(() => addMessage(`Nice to meet you, ${userName}! Please provide your email address so we can contact you.`, "bot"), 600);
+            setTimeout(() => addMessage(`Nice to meet you, ${userName}! Now enter your email so I can get back to you.`, "bot"), 600);
             return;
         }
+
         if (!userEmail) {
             if (!text.includes('@')) {
                 addMessage("Enter a valid email:", "bot");
                 return;
             }
             userEmail = text;
-            addMessage("Thank you! I'll get back to you soon.", "bot");
-            
-            fetch('/send_message', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({message: firstMessage, user_name: userName, user_email: userEmail})
-            });
+            setTimeout(() => {
+                addMessage("I wrote it down! Now write your message or question:", "bot");
+            }, 600);
             return;
+            
         }
+
+        userMessage = text;
+        addMessage("Thank you! Your message has been sent to Levon. I'll contact you soon! If you have any more questions, write them down.", "bot");
+
+        sendToServer(userName, userEmail, userMessage);
+
         
-        fetch('/send_message', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({message: text, user_name: userName, user_email: userEmail})
-        });
     }
 
     chatTrigger.onclick = () => chatWindow.classList.toggle('hidden');
