@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block stylesheet %}{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socketio/4.0.1/socketio.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+{% block body %}{% endblock %}
+{% block script %}{% endblock %}
+<div id="custom-chat-widget">
+    <div id="chat-window" class="chat-window hidden">
+        <div class="chat-header">
+            <div class="user-info">
+                <div class="status-dot"></div>
+               <span>Assistant Levon</span>
+            </div>
+            <button id="close-chat">&times;</button>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="msg bot">
+                Hi there! 👋 I'm Levon virtual assistant. Please write your name.
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="user-msg" placeholder="Write a message..." autocomplete="off">
+            <button id="send-msg">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
+            </button>
+        </div>
+        <div class="chat-footer">Powered by Levon</div>
+    </div>
+
+    <button id="chat-trigger" class="chat-trigger">
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
+    </button>
+</div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof io === 'undefined') {
+        console.error("Критическая ошибка: Библиотека Socket.IO не загружена!");
+        return; 
+    }
+    const socket = io();
+    const chatWindow = document.getElementById('chat-window');
+    const chatTrigger = document.getElementById('chat-trigger');
+    const closeChat = document.getElementById('close-chat');
+    const sendBtn = document.getElementById('send-msg');
+    const input = document.getElementById('user-msg');
+    const messagesBox = document.getElementById('chat-messages');
+
+    let userName = "";
+    let userEmail = "";
+    let firstMessage = "";
+    let emailSent = false;
+
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
+
+    function addMessage(text, sender) {
+        const div = document.createElement('div');
+        div.className = `msg ${sender}`;
+        div.textContent = text;
+        messagesBox.appendChild(div);
+        messagesBox.scrollTop = messagesBox.scrollHeight;
+    }
+
+    socket.on('user_receive', (data) => {
+        addMessage(data.message, 'bot');
+    });
+
+    function sendToAdmin(name, msg) {
+        console.log("Send socket");
+        socket.emit('user_msg', {
+           user_name: name,
+           message: msg
+        });
+    }
+    function sendToServer(name, email, message) {
+        if (emailSent) return;
+        socket.emit('message_from_user', { text: message, user: name });
+        fetch('/send_message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_name: name,
+                user_email: email,
+                message: message
+            })
+        })
+        .then(res => res.json())
+        .then(data => console.log('Send:', data))
+        .catch(err => console.error('Error:', err));
+    }
+
+    function sendMessage() {
+        const text = input.value.trim();
+        if (!text) return;
+
+        addMessage(text, 'user');
+        input.value = '';
+
+        if (!userName) {
+            userName = text;
+            setTimeout(() => addMessage(`Nice to meet you, ${userName}! Now enter your email so I can get back to you.`, "bot"), 600);
+            return;
+        }
+
+        if (!userEmail) {
+            if (!text.includes('@')) {
+                addMessage("Enter a valid email:", "bot");
+                return;
+            }
+            userEmail = text;
+            setTimeout(() => {
+                addMessage("I wrote it down! Now write your message or question:", "bot");
+            }, 600);
+            return;
+            
+        }
+
+        const userMessage = text;
+
+        socket.emit('user_msg', {
+           user_name: userName,
+           user_email: userEmail,
+           message: text
+        });
+        
+        if (!emailSent) {
+            sendToServer(userName, userEmail, userMessage);
+            addMessage("Thank you! Your message has been sent to Levon. I'll contact you soon! If you have any more questions, write them down.", "bot");
+            emailSent = true;
+        }
+        
+        sendToServer(userName, userEmail, userMessage);
+
+        
+    }
+
+    chatTrigger.onclick = () => chatWindow.classList.toggle('hidden');
+    closeChat.onclick = () => chatWindow.classList.add('hidden');
+    sendBtn.onclick = sendMessage;
+    input.onkeypress = (e) => { if(e.key === 'Enter') sendMessage(); };
+});
+</script>
+<script>
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', function() {
+        const currentActive = document.querySelector('.nav-link.active');
+        if (currentActive) {
+            currentActive.classList.remove('active');
+        }
+
+        this.classList.add('active');
+    });
+});
+</script>
+</body>
+</html>
+

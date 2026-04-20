@@ -1,0 +1,61 @@
+{% extends 'basic.html' %}
+
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+
+{% block title %}
+Admin panel
+{% endblock %}
+
+{% block body %}
+<h1>Admin panel</h1>
+<div id="admin-log"></div>
+<div class="reply">
+   <input type="text" id="admin-input" class="user-reply" placeholder="Write reponse...">
+   <button type="submit" class="btn btn-reponse" onclick="sendReply()">Send</button>
+</div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script>
+    const socket = io()
+    document.addEventListener('DOMContentLoader', () => {
+        const adminInput = document.getElementById('admin-input');
+    }); 
+    socket.on('admin_receive', (data) => {
+       console.log("I have message", data);
+       const log = document.getElementById('admin-log')
+       if (log) {
+           log.innerHTML += `<div><b>${data.user_name}:</b> ${data.message}</div>`
+           log.scrollTop = log.scrollHeight;
+       }
+    });
+
+
+   function sendReply() {
+       const input = document.getElementById('admin-input')
+       const text = input.value
+       if (!text) return;
+
+       socket.emit('admin_reply', {message: text});
+
+       const log = document.getElementById('admin-log')
+       log.innerHTML += `<div class="text-primary"><b>You:</b> ${text}</div>`
+       input.value = '';
+       log.scrollTop = log.scrollHeight;
+   }
+const adminInput = document.getElementById('admin-input');
+adminInput.onkeydown = function(e) {
+    if (e.key === 'Enter') {
+        sendReply();
+    }
+};
+</script>
+<script>
+    if (!sessionStorage.getItem('is_logged_in')) {
+        window.location.href = "/logout";
+    }
+
+    sessionStorage.setItem('is_logged_in', 'true');
+</script>
+{% endblock %}
+

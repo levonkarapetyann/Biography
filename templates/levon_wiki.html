@@ -1,0 +1,112 @@
+{% extends 'support_chat.html' %} {% block title %} Levon Karapetyan {% endblock %}
+
+{% block stylesheet %}
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/levon_wiki.css') }}?v=1.0">
+{% endblock %}
+
+{% block body %}
+<div class="cursor"></div>
+<div class="fix-icon">
+    <nav class="nav-menu">
+        <a href="#about" class="nav-link">
+           <span class="nav-line"></span>
+           <span class="nav-text">About</span>
+        </a>
+        <a href="#experience" class="nav-link active">
+           <span class="nav-line"></span>
+           <span class="nav-text">Experience</span>
+        </a>
+        <a href="#skills" class="nav-link">
+           <span class="nav-line"></span>
+           <span class="nav-text">Technical skills</span>
+        </a>
+    </nav>
+   <img src="{{ url_for('static', filename='img/my_photo.jpg') }}" alt="My photo">
+   <a href="https://www.linkedin.com/in/levon-karapetyan-a42b731a4/" target="_blank"><i class='bx bxl-linkedin-square'></i></a>
+   <a href="https://www.instagram.com/lyov._333/" target="_blank"><i class='bx bxl-instagram' ></a></i>
+   <a href="https://github.com/levonkarapetyann" target="_blamk"><i class='bx bxl-github' ></a></i>
+   <a href="https://t.me/@lyovkarapetyan" target="_blank"><i class='bx bxl-telegram' ></a></i>
+</div>
+<div class="main">
+   <div class="fix">
+       <h1>Levon Karapetyan</h1>
+       <h3>3rd Year Quantum Information Science</h3>
+       <p>Engineering Physics student specializing in Quantum Informatics.<br>Interested in research, data-driven engineering, and innovative technology projects.</p>
+   </div>
+   <div class="scroll">
+      <div id="about" class="about">
+          <p class="about1">I’m an engineering physics student with a strong passion for quantum information, theoretical physics, and advanced technology development. I enjoy working at the intersection of science and engineering, where mathematical theory meets practical implementation. My academic background has given me a solid foundation in differential equations, theoretical physics, and computational methods, while my curiosity continuously drives me to explore new technologies and interdisciplinary challenges.</p>
+          <p class="about2">Currently, I am studying Engineering Physics with a specialization in Quantum Information at the Russian-Armenian University, where I focus on developing both analytical and technical problem-solving skills. Alongside my studies, I work at Synopsys, gaining valuable experience in a professional engineering environment and learning how advanced technologies are developed within industry-level teams.</p>
+          <p class="about3">Previously, I worked at Aerodynamic, where I participated in the design and development of unmanned aerial systems. This experience allowed me to contribute to real engineering projects and deepen my understanding of applied physics, aerodynamics, and system design. I also took part in a summer university program in Krasnoyarsk, where my team earned first place for designing and presenting our own engineering project.</p>
+      </div>
+      <div class="study">
+         <p class="study1">Russian-Armenian University</p>
+         <p class="study2">Bachelor of Engineering Physics - Quantum Informatics</p>
+         <p class="study3"><b>2021 - Present</b></p>
+         <p class="about-study1">I am currently studying at Russian-Armenian University in the Faculty of Engineering Physics, majoring in Quantum Informatics. My academic program combines rigorous training in physics, mathematics, and modern computational technologies, allowing me to develop both a strong theoretical understanding of complex scientific concepts and practical engineering skills.
+         <p class="about-study2">Throughout my studies, I have focused extensively on differential equations, theoretical physics, and the foundations of quantum computing, which have significantly strengthened my interest in research and engineering. I am particularly drawn to interdisciplinary challenges at the intersection of physics, programming, and advanced technologies.</p>
+         <p class="about-study3">My university education has helped me build analytical thinking, problem-solving abilities, and a scientific approach to tackling complex technical challenges and developing innovative solutions.</p>
+      </div>
+      <div class="achievements">
+         <p id="ach-title">ACHIEVEMENTS & AWARDS</p>
+         <p id="ach1">&middot 1st Place - Team Technical Project, Summer University (Krasnoyarsk, 2024)
+         </p>
+         <p id="ach2">&middot 1st Place - Best Project on National Statistical Systems</p>
+         <p id="ach3">&middot Selected Participant - CIS Summer School (2025)</p>
+         <p id="ach4">&middot Selected Participant - Winter University (Veliky Novgorod, 2025)</p>
+      </div>
+      <div id="experience" class="work-experience">
+         <div class="date">
+            03/2026 - PRESENT
+         </div>
+         <div class="experience">
+            <div class="hov">
+               <h3>
+                  Climate Net Project — TUMO Labs, Yerevan
+               </h3>
+               <h4>Student / Trainee</h4>
+            </div>
+            <p>— currently enrolled in a 6-month program focused on web development, where I work with JavaScript and Python to build applications, implement real-time communication using Socket.IO, and learn to configure server infrastructure with Nginx and Gunicorn, while gaining hands-on experience with client–server architecture and practical development tasks.</p>
+            <div class="tags">
+               <span class="tag">JavaScript</span>
+               <span class="tag">Python</span>
+               <span class="tag">SocketIO</span>
+               <span class="tag">Nginx</span>
+               <span class="tag">Gunicorn</span>
+            </div>
+         </div>
+      </div>
+      <div id="experience"class="work-experience2">
+         <div class="date2">
+            09/2021 - 12/2021
+         </div>
+         <div class="experience2">
+            <div class="hov">
+               <h3>Intern Engineer (UAV Development)</h3>
+               <h4>Aerodynamic Company</h4>
+            </div>
+            <p>designed and optimized UAV aerodynamic components, participated in prototyping and testing processes, and worked with Fusion 360 and Autodesk tools for 3D modeling and design.</p>
+         </div>
+      </div>
+      <div id="skills" class="skills-sect">
+         <h2>Technical Skills</h2>
+         <ul class="skil">
+            <li>JavaScript</li>
+            <li>Python</li>
+            <li>SQL</li>
+            <li>HTML</li>
+            <li>CSS</li>
+         </ul>
+      </div>
+   </div>
+</div>
+{% block script %}
+<script>document.addEventListener('mousemove', (e) => {
+    const el = document.querySelector('.cursor');
+    el.style.setProperty('--x', e.clientX + 'px');
+    el.style.setProperty('--y', e.clientY + 'px');
+});</script>
+{% endblock %}
+{% endblock %}
+
