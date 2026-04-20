@@ -17,8 +17,9 @@ app.config['MAIL_USERNAME'] = 'lkaeapetyan@gmail.com'
 app.config['MAIL_DEFAULT_SENDER'] = 'lkaeapetyan@gmail.com'
 app.config['MAIL_PASSWORD'] = 'pntc fshh ebyx hyvm'
 
-socketio = SocketIO(app, cors_allowed_origns="*")
+socketio = SocketIO(app, cors_allowed_origins="*")
 mail = Mail(app)
+sent_emails = {}
 
 
 @app.route('/home')
@@ -47,6 +48,39 @@ def send_message():
         print(f"Error: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
+@app.route('/admin')
+def admin():
+    return render_template('admin.html')
+
+@socketio.on('user_msg')
+def handle_user_message(data):
+    user_name = data.get('user_name', 'Guest')
+    user_email = data.get('user_email', 'No email')
+    message = data.get('message', '')
+    sid = request.sid
+    print(f"Message from {user_name}: {message}")
+    emit('admin_receive', {
+        'user_name': user_name,
+        'message': message
+    }, broadcast=True)
+
+    if sid not in sent_emails:
+        try:
+           msg = Message(
+               subject=f"New message in chat from: {user_name}",
+               recipients=[app.config['MAIL_USERNAME']],
+               body=f"User {user_name} ({user_email}) write you in chat.\n\n"
+               f"Open admin panel",
+       	       reply_to=user_email
+       	   )
+           mail.send(msg)
+           sent_emails[sid] = True
+        except Exception as e:
+             print(f"Error: {e}")
+
+@socketio.on('admin_reply')
+def handle_admin_reply(data):
+    emit('user_receive', data, broadcast=True)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, port=5000) 
+    socketio.run(app, '0.0.0.0', debug=True, port=5000) 
