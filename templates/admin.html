@@ -1,0 +1,46 @@
+{% extends 'basic.html' %}
+
+{% block stylesheet %}
+<link src="stylesheet" href="url_for('static', filename='css/admin.css')">
+{% endblock %}
+
+{% block title %}
+Admin panel
+{% endblock %}
+
+{% block body %}
+<h1>Admin panel</h1>
+<div id="admin-log" style="border: 1px solid #ccc; height: 300px; overflow-y: auto; padding: 10px; margin-bottom: 10px;"></div>
+<div class="reply">
+   <input type="text" id="admin-input" class="user-reply" placeholder="Write reponse...">
+   <button class="btn btn-reponse" onclick="sendReply()">Send</button>
+</div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script>
+    const socket = io()
+    
+    socket.on('admin_receive', (data) => {
+       console.log("I have message", data);
+       const log = document.getElementById('admin-log')
+       if (log) {
+           log.innerHTML += `<div><b>${data.user_name}:</b> ${data.message}</div>`
+           log.scrollTop = log.scrollHeight;
+       }
+    });
+
+
+   function sendReply() {
+       const input = document.getElementById('admin-input')
+       const text = input.value
+       if (!text) return;
+
+       socket.emit('admin_reply', {message: text});
+
+       const log = document.getElementById('admin-log')
+       log.innerHTML += `<div class="text-primary"><b>You:</b> ${text}</div>`
+       input.value = '';
+       log.scrollTop = log.scrollHeight;
+   }
+</script>
+{% endblock %}
+
