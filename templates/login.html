@@ -1,0 +1,19 @@
+{% extends 'basic.html' %}
+
+
+{% block title %}
+Login
+{% endblock %}
+{% block stylesheet %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+{% block body %}
+<div class="login-container">
+    <form method="POST" class="login-form">
+        <h2>Login to Control Panel</h2>
+        <input type="text" name="username" placeholder="Login" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit" class="login">Enter</button>
+    </form>
+</div>
+{% endblock %}
