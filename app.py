@@ -37,6 +37,7 @@ app.config['MAIL_PASSWORD'] = 'pntc fshh ebyx hyvm'
 socketio = SocketIO(app, cors_allowed_origins="*")
 mail = Mail(app)
 sent_emails = {}
+messages_history = []
 
 class User(UserMixin):
    def __init__(self, id):
@@ -76,7 +77,7 @@ def index():
 @app.route('/admin')
 @login_required
 def admin():
-    return render_template('admin.html')
+    return render_template('admin.html', history=messages_history)
 
 @app.route('/logout')
 @login_required
@@ -89,6 +90,7 @@ def handle_user_message(data):
     user_name = data.get('user_name', 'Guest')
     user_email = data.get('user_email', 'No email')
     message = data.get('message', '')
+    messages_history.append({'user_name': user_name, 'message': message, 'type': 'user'})
     sid = request.sid
     print(f"Message from {user_name}: {message}")
     emit('admin_receive', {
@@ -101,8 +103,8 @@ def handle_user_message(data):
            msg = Message(
                subject=f"New message in chat from: {user_name}",
                recipients=[app.config['MAIL_USERNAME']],
-               body=f"User {user_name} ({user_email}) write you in chat.\n\n"
-               f"Open admin panel",
+               body=f"User {user_name} ({user_email}) write you in chat: {message}\n\n"
+               f"Open admin panel ( http://10.167.163.168:8001/admin )",
        	       reply_to=user_email
        	   )
            mail.send(msg)
@@ -112,7 +114,8 @@ def handle_user_message(data):
 
 @socketio.on('admin_reply')
 def handle_admin_reply(data):
+    messages_history.append({'user_name': 'You', 'message': data.get('message'), 'type': 'admin'})
     emit('user_receive', data, broadcast=True)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True, port=5000) 
+    socketio.run(app, '0.0.0.0', debug=True, port=5000) 
