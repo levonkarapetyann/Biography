@@ -1,7 +1,7 @@
 {% extends 'basic.html' %}
 
 {% block stylesheet %}
-<link src="stylesheet" href="url_for('static', filename='css/admin.css')">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
 {% endblock %}
 
 {% block title %}
@@ -10,15 +10,17 @@ Admin panel
 
 {% block body %}
 <h1>Admin panel</h1>
-<div id="admin-log" style="border: 1px solid #ccc; height: 300px; overflow-y: auto; padding: 10px; margin-bottom: 10px;"></div>
+<div id="admin-log"></div>
 <div class="reply">
    <input type="text" id="admin-input" class="user-reply" placeholder="Write reponse...">
-   <button class="btn btn-reponse" onclick="sendReply()">Send</button>
+   <button type="submit" class="btn btn-reponse" onclick="sendReply()">Send</button>
 </div>
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <script>
     const socket = io()
-    
+    document.addEventListener('DOMContentLoader', () => {
+        const adminInput = document.getElementById('admin-input');
+    }); 
     socket.on('admin_receive', (data) => {
        console.log("I have message", data);
        const log = document.getElementById('admin-log')
@@ -41,6 +43,19 @@ Admin panel
        input.value = '';
        log.scrollTop = log.scrollHeight;
    }
+const adminInput = document.getElementById('admin-input');
+adminInput.onkeydown = function(e) {
+    if (e.key === 'Enter') {
+        sendReply();
+    }
+};
+</script>
+<script>
+    if (!sessionStorage.getItem('is_logged_in')) {
+        window.location.href = "/logout";
+    }
+
+    sessionStorage.setItem('is_logged_in', 'true');
 </script>
 {% endblock %}
 
