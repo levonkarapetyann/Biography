@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     {% block stylesheet %}{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socketio/4.0.1/socketio.js"></script>
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
@@ -35,8 +36,14 @@
         <svg viewBox="0 0 24 24" width="30" height="30" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"></path></svg>
     </button>
 </div>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    if (typeof io === 'undefined') {
+        console.error("Критическая ошибка: Библиотека Socket.IO не загружена!");
+        return; 
+    }
+    const socket = io();
     const chatWindow = document.getElementById('chat-window');
     const chatTrigger = document.getElementById('chat-trigger');
     const closeChat = document.getElementById('close-chat');
@@ -47,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let userName = "";
     let userEmail = "";
     let firstMessage = "";
+    let emailSent = false;
 
     function addMessage(text, sender) {
         const div = document.createElement('div');
@@ -56,7 +64,20 @@ document.addEventListener('DOMContentLoaded', () => {
         messagesBox.scrollTop = messagesBox.scrollHeight;
     }
 
+    socket.on('user_receive', (data) => {
+        addMessage(data.message, 'bot');
+    });
+
+    function sendToAdmin(name, msg) {
+        console.log("Send socket");
+        socket.emit('user_msg', {
+           user_name: name,
+           message: msg
+        });
+    }
     function sendToServer(name, email, message) {
+        if (emailSent) return;
+        socket.emit('message_from_user', { text: message, user: name });
         fetch('/send_message', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -97,9 +118,20 @@ document.addEventListener('DOMContentLoaded', () => {
             
         }
 
-        userMessage = text;
-        addMessage("Thank you! Your message has been sent to Levon. I'll contact you soon! If you have any more questions, write them down.", "bot");
+        const userMessage = text;
 
+        socket.emit('user_msg', {
+           user_name: userName,
+           user_email: userEmail,
+           message: text
+        });
+        
+        if (!emailSent) {
+            sendToServer(userName, userEmail, userMessage);
+            addMessage("Thank you! Your message has been sent to Levon. I'll contact you soon! If you have any more questions, write them down.", "bot");
+            emailSent = true;
+        }
+        
         sendToServer(userName, userEmail, userMessage);
 
         
