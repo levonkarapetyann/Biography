@@ -287,19 +287,6 @@ body {
    font-size: 0.75rem;
    font-weight: bold;
 }
-
-
-img {
-   position: fixed;
-   color: #94a3b8 !important;
-   width: 300px;
-   font-size: 40px;
-   left: 350px;
-   top: 350px;
-   border-radius: 45px;
-   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
 .bxl-linkedin-square {
    position: fixed;
    color: #94a3b8 !important;
@@ -315,6 +302,8 @@ img {
    left: 210px;
    top: 700px;
 }
+
+
 
 .bxl-github {
    position: fixed;
@@ -503,4 +492,3 @@ img {
 #chat-messages::-webkit-scrollbar {
     display: none;
 }
-
