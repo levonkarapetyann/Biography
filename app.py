@@ -15,6 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
 app.secret_key = 'my_very_secret_key'
 db = SQLAlchemy(app)
 load_dotenv()
+messages_history = []
 
 class Messages(db.Model):
       id = db.Column(db.Integer, primary_key=True)
@@ -22,7 +23,7 @@ class Messages(db.Model):
       message = db.Column(db.String(500), nullable=True)
 
       def __repr__(self):
-          return f"<{self.id}>"
+          return f"<{self.message}>"
 
 admin_password = os.getenv('ADMIN_PASSWORD')
 users = {
