@@ -22,12 +22,9 @@ Admin panel
         const adminInput = document.getElementById('admin-input');
     }); 
     socket.on('admin_receive', (data) => {
-       console.log("I have message", data);
        const log = document.getElementById('admin-log')
-       if (log) {
-           log.innerHTML += `<div><b>${data.user_name}:</b> ${data.message}</div>`
-           log.scrollTop = log.scrollHeight;
-       }
+       log.innerHTML += `<div><b>${data.user_name}:</b> ${data.message}</div>`
+       log.scrollTop = log.scrollHeight;
     });
 
 
@@ -36,19 +33,19 @@ Admin panel
        const text = input.value
        if (!text) return;
 
-       socket.emit('admin_reply', {message: text});
+       socket.emit('admin_reply', { message: text });
 
        const log = document.getElementById('admin-log')
        log.innerHTML += `<div class="text-primary"><b>You:</b> ${text}</div>`
        input.value = '';
        log.scrollTop = log.scrollHeight;
    }
-const adminInput = document.getElementById('admin-input');
-adminInput.onkeydown = function(e) {
-    if (e.key === 'Enter') {
-        sendReply();
-    }
-};
+   const adminInput = document.getElementById('admin-input');
+   adminInput.onkeydown = function(e) {
+       if (e.key === 'Enter') {
+           sendReply();
+       }
+   };
 </script>
 <script>
     if (!sessionStorage.getItem('is_logged_in')) {

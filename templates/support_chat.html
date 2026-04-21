@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error("Критическая ошибка: Библиотека Socket.IO не загружена!");
         return; 
     }
-    const socket = io();
+    const socket = io()
     const chatWindow = document.getElementById('chat-window');
     const chatTrigger = document.getElementById('chat-trigger');
     const closeChat = document.getElementById('close-chat');
