@@ -184,9 +184,10 @@ body {
 
 
 .skills-sect h2 {
-    font-size: 1rem;
+    font-size: 1.3rem;
     margin-bottom: 30px;
-    color: #fff;
+    margin-right: 100px;
+    color: #e2e8f0;
 }
 
 
