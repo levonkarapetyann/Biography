@@ -8,10 +8,21 @@ from flask_login import LoginManager, UserMixin, login_user, login_required, log
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_socketio import SocketIO, emit
 from dotenv import load_dotenv
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
 app.secret_key = 'my_very_secret_key'
+db = SQLAlchemy(app)
 load_dotenv()
+
+class Messages(db.Model):
+      id = db.Column(db.Integer, primary_key=True)
+      username = db.Column(db.String(80))
+      message = db.Column(db.String(500), nullable=True)
+
+      def __repr__(self):
+          return f"<{self.id}>"
 
 admin_password = os.getenv('ADMIN_PASSWORD')
 users = {
@@ -37,7 +48,6 @@ app.config['MAIL_PASSWORD'] = 'pntc fshh ebyx hyvm'
 socketio = SocketIO(app, cors_allowed_origins="*")
 mail = Mail(app)
 sent_emails = {}
-messages_history = []
 
 class User(UserMixin):
    def __init__(self, id):
@@ -77,7 +87,7 @@ def index():
 @app.route('/admin')
 @login_required
 def admin():
-    return render_template('admin.html', history=messages_history)
+    return render_template('admin.html')
 
 @app.route('/logout')
 @login_required
@@ -90,6 +100,13 @@ def handle_user_message(data):
     user_name = data.get('user_name', 'Guest')
     user_email = data.get('user_email', 'No email')
     message = data.get('message', '')
+    try:
+       m = Messages(username=user_name, message=message)
+       db.session.add(m)
+       db.session.commit()
+    except:
+       db.session.rollback()
+       flash('Error')
     messages_history.append({'user_name': user_name, 'message': message, 'type': 'user'})
     sid = request.sid
     print(f"Message from {user_name}: {message}")
@@ -118,4 +135,4 @@ def handle_admin_reply(data):
     emit('user_receive', data, broadcast=True)
 
 if __name__ == '__main__':
-    socketio.run(app, '0.0.0.0', debug=True, port=5000) 
+    socketio.run(app, debug=True, port=5000) 
