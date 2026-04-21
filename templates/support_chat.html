@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="chat-input-area">
-            <input type="text" id="user-msg" placeholder="Write a message..." autocomplete="off">
+            <input type="text" id="user-msg" name="user_message"placeholder="Write a message..." autocomplete="off">
             <button id="send-msg">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path></svg>
             </button>
@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function sendToAdmin(name, msg) {
-        console.log("Send socket");
         socket.emit('user_msg', {
            user_name: name,
            message: msg
