@@ -108,13 +108,50 @@ body {
    font-size: 16px;
 }
 
+.gmail {
+   color: #94a3b8 !important;
+   font-size: 15px;
+}
+
+.number {
+   color: #94a3b8 !important;
+   font-size: 15px;
+   position: fixed;
+   left: 365px;
+}
+
+.loc {
+   color: #94a3b8 !important;
+   position: fixed;
+   left: 600px;
+   font-size: 15px;
+}
+
+.gridd {
+   display: flex;
+   width: 850px;;
+   justify-content: space-between;
+   align-items: center;
+   gap: 10px;
+   position: fixed;
+   bottom: 30px;
+   left: 50px;
+}
+
+.gridd > span {
+   flex: 1;
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   white-space: nowrap;
+}
+
 .main {
    display: flex;
    align-items: flex-start;
    padding: 20px;
    min-height: 200vh;
 }
-
 .scroll {
    flex-grow: 1;
    display: flex;
@@ -172,52 +209,6 @@ body {
    padding-top: 30px !important;
    color: #e2e8f0;
 }
-
-
-.skills-sect {
-    width: 100%;
-    max-width: 800px;
-    margin: 0 auto;   
-    padding: 20px;
-    text-align: center;
-}
-
-
-.skills-sect h2 {
-    font-size: 1.3rem;
-    margin-bottom: 30px;
-    margin-right: 100px;
-    color: #e2e8f0;
-}
-
-
-.skil {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 15px 40px;
-    list-style: none;
-    padding: 0;
-    justify-items: start;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-
-.skil li {
-    position: relative;
-    padding-left: 70px;
-    color: #ccc;
-    font-size: 1.1rem;
-}
-
-.skil li::before {
-    content: "•";
-    position: absolute;
-    left: 50px;
-    color: #3498db;
-}
-
-
 
 .work-experience, .work-experience2 {
    display: flex;
@@ -492,4 +483,143 @@ body {
 
 #chat-messages::-webkit-scrollbar {
     display: none;
+}
+
+.lang {
+    max-width: none; 
+    width: 100%;
+    padding-left: 35%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    margin-left: auto;
+    margin-right: 15%;
+    margin-top: 7%;
+}
+
+.lang h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #fff;
+    border-left: 4px solid #7d2ae8;
+    padding-left: 15px;
+}
+
+.lang-item {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease, background 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lang-item:hover {
+    transform: translateY(-3px); 
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.info span:last-child {
+    opacity: 0.7; 
+    font-size: 0.9rem;
+}
+
+.line {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.line::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    background: linear-gradient(90deg, #7d2ae8, #a56eff);
+    border-radius: 10px;
+    transition: width 1.5s cubic-bezier(0.1, 0.42, 0.41, 1);
+    width: 0;
+}
+
+.line[data-lang="native"]::after {
+    width: 100%;
+}
+
+.line[data-lang="b1"]::after {
+    width: 60%;
+}
+
+.line[data-lang="a2"]::after {
+    width: 40%;
+}
+
+
+.skills-sect {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    margin-left: auto;
+    margin-right: 15%;
+    width: 100%;
+    padding-left: 35%;
+}
+
+.skills-sect h2 {
+    font-size: 1.5rem;
+    color: #fff;
+    border-left: 4px solid #7d2ae8;
+    padding-left: 15px;
+    margin-bottom: 25px;
+}
+
+.setka {
+    display: grid;
+    grid-template-columns: repeat(auto-nill, minmax(140px, 1fr)); 
+    gap: 15px;
+    width: 100%;
+}
+
+.skil {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+}
+
+.skil span {
+    color: #e0e0e0;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.skil:hover {
+    background: rgba(125, 42, 232, 0.15); 
+    border-color: #7d2ae8;
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(125, 42, 232, 0.2);
+}
+
+.skil::before {
+    content: '';
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #7d2ae8;
+    border-radius: 50%;
+    top: 10px;
+    left: 10px;
+    opacity: 0.5;
 }
