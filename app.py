@@ -135,5 +135,17 @@ def handle_admin_reply(data):
     messages_history.append({'user_name': 'You', 'message': data.get('message'), 'type': 'admin'})
     emit('user_receive', data, broadcast=True)
 
+@socketio.on('connect')
+def handle_connect():
+    last_message = Messages.query.order_by(Messages.id.desc()).first()
+    last = []
+    if last_message:
+       last = [{
+          'username': last_message.username,
+          'message': last_message.message
+       }]
+
+    emit('lsmg', last)
+
 if __name__ == '__main__':
     socketio.run(app, debug=True, port=5000) 
