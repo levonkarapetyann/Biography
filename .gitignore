@@ -4,4 +4,4 @@ instance/
 *.db
 venv/
 *.swp
-.env/
+.env
