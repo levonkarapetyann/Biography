@@ -486,14 +486,10 @@ body {
 }
 
 .lang {
-    max-width: none; 
     width: 100%;
-    padding-left: 35%;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #fff;
-    margin-left: auto;
-    margin-right: 15%;
-    margin-top: 7%;
+    margin: 0;
 }
 
 .lang h2 {
@@ -564,12 +560,8 @@ body {
 
 
 .skills-sect {
-    margin-top: 20px;
-    margin-bottom: 40px;
-    margin-left: auto;
-    margin-right: 15%;
     width: 100%;
-    padding-left: 35%;
+    margin: 0;
 }
 
 .skills-sect h2 {
@@ -622,4 +614,14 @@ body {
     top: 10px;
     left: 10px;
     opacity: 0.5;
+}
+
+.right {
+    width: 100%;
+    max-width: 600px;
+    margin-left: auto; 
+    margin-right: 3px;;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
