@@ -625,3 +625,11 @@ body {
     flex-direction: column;
     gap: 40px;
 }
+
+.gmail a {
+   text-decoration: none;
+   color: inherit;
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+}
