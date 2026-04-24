@@ -5,7 +5,7 @@
 Tech Stack
     Frontend: HTML5, CSS3 (Custom properties, Flexbox, and Grid)
     Backend: Python with Flask
-    Infrastructure: Nginx, Gunicorn, Unix-based deployment
+    Infrastructure: Nginx, Gunicorn
 
 
 How to run a project locally:
