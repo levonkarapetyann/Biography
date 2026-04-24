@@ -2,13 +2,13 @@
     Responsive personal biography website
 
 
-Tech Stack
-    Frontend: HTML5, CSS3 (Custom properties, Flexbox, and Grid)
-    Backend: Python with Flask
-    Infrastructure: Nginx, Gunicorn
+## 🛠 Tech Stack
+    * Frontend: HTML5, CSS3 (Custom properties, Flexbox, and Grid)
+    * Backend: Python with Flask
+    * Infrastructure: Nginx, Gunicorn
 
 
-How to run a project locally:
+## 🚀How to run a project locally:
 
     git clone https://github.com/levonkarapetyann/Biography.git
 
@@ -16,6 +16,11 @@ How to run a project locally:
 
     pip install -r requirements.txt
     python app.py
+    
+
+## 🌐 Live Demo
+    The project is officially deployed and accessible here:
+    **http://107.23.153.192/**
 
 Project Structure:
    * `/static/css` - Custom stylesheets (Regular CSS)
