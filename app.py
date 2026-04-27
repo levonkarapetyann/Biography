@@ -16,6 +16,7 @@ app.secret_key = 'my_very_secret_key'
 db = SQLAlchemy(app)
 load_dotenv()
 messages_history = []
+user_sessions = {}
 
 class Messages(db.Model):
       id = db.Column(db.Integer, primary_key=True)
@@ -90,6 +91,11 @@ def index():
 def admin():
     return render_template('admin.html')
 
+@app.route('/get_users')
+@login_required
+def get_users():
+    return jsonify(list(user.sessions.items()))
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -110,10 +116,12 @@ def handle_user_message(data):
        flash('Error')
     messages_history.append({'user_name': user_name, 'message': message, 'type': 'user'})
     sid = request.sid
+    user_sessions[user_name] = sid
     print(f"Message from {user_name}: {message}")
     emit('admin_receive', {
         'user_name': user_name,
-        'message': message
+        'message': message,
+        'sid': sid
     }, broadcast=True)
 
     if sid not in sent_emails:
@@ -133,7 +141,11 @@ def handle_user_message(data):
 @socketio.on('admin_reply')
 def handle_admin_reply(data):
     messages_history.append({'user_name': 'You', 'message': data.get('message'), 'type': 'admin'})
-    emit('user_receive', data, broadcast=True)
+    target_sid = data.get('target_sid')
+    if target_sid:
+       emit('user_receive', data, room=target_sid)
+    else:
+       emit('user_receive', data, broadcast=True)
 
 @socketio.on('connect')
 def handle_connect():
