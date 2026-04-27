@@ -10,14 +10,33 @@ Admin panel
 
 {% block body %}
 <h1>Admin panel</h1>
-<div id="admin-log"></div>
-<div class="reply">
-   <input type="text" id="admin-input" class="user-reply" placeholder="Write reponse...">
-   <button type="submit" class="btn btn-reponse" onclick="sendReply()">Send</button>
+<div id="admin-panel">
+   <div id="user-list">
+      <h3>Active users</h3>
+      <div id="users"></div>
+   </div>
+   <div id="chat-panel">
+      <div id="admin-log"></div>
+      <div class="reply">
+         <span id="replying-to">Select a user</span>
+         <input type="text" id="admin-input"  placeholder="Write reponse...">
+         <button type="submit" class="btn btn-reponse" onclick="sendReply()">Send</button>
+      </div>
+   </div>
 </div>
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
 <script>
+    let userSid = null;
+    let userName = null;
     const socket = io()
+
+    function selectUser(name, sid) {
+        userSid = sid;
+        userName = name;
+        document.getElementById('replying-to').textContent = `Replying to: ${name}`;
+        document.querySelectorAll('.user-item').forEach(el => el.classList.remove('active'));
+        document.getElementById('user-' + sid)?.classList.add('active');
+    }
     document.addEventListener('DOMContentLoader', () => {
         const adminInput = document.getElementById('admin-input');
     }); 
@@ -25,7 +44,24 @@ Admin panel
        const log = document.getElementById('admin-log')
        log.innerHTML += `<div><b>${data.user_name}:</b> ${data.message}</div>`
        log.scrollTop = log.scrollHeight;
+       addUserToList(data.user_name, data.sid);
+
+       if (!userSid) {
+           selectUser(data.user_name, data.sid);
+       }
     });
+
+    function addUserToList(name, sid) {
+        if (document.getElementById('user-' + sid)) return;
+
+        const users = document.getElementById('users');
+        const div = document.createElement('div');
+        div.className = 'user-item';
+        div.id = 'user-' + sid;
+        div.textContent = name;
+        div.onclick = () => selectUser(name, sid);
+        users.appendChild(div);
+    }
 
 
    function sendReply() {
@@ -33,7 +69,12 @@ Admin panel
        const text = input.value
        if (!text) return;
 
-       socket.emit('admin_reply', { message: text });
+       if (!userSid) {
+           alert('Select a user first!');
+           return;
+       }
+
+       socket.emit('admin_reply', { message: text, target_sid: userSid });
 
        const log = document.getElementById('admin-log')
        log.innerHTML += `<div class="text-primary"><b>You:</b> ${text}</div>`
