@@ -168,10 +168,33 @@ body {
    color: #e2e8f0 !important;
 }
 
-.study1 {
-   margin-top: 3rem;
+.what {
+   padding: 0px;
+   max-width: 600px;
+   font-size: 30px;
+   margin-left: auto;
+   margin-right: 10px;
    display: flex;
+   color: #e2e8f0;
+}
+
+.what:hover {
+   color: #5eead4;
+}
+
+.study1 {
+   margin-top: 1.5rem;
+   display: flex;
+   font-size: 30px;
    text-align: left;
+}
+
+.study2 {
+   font-size: 20px;
+}
+
+.hovv:hover * {
+   color: #5eead4 !important;
 }
 
 .about-study1 {
@@ -203,11 +226,20 @@ body {
    color: #94a3b8; 
 }
 
+#ach1 {
+   font-size: 17px !important;
+}
+
 #ach-title {
    display: flex;
    justify-content: flex-start !important;
    padding-top: 30px !important;
    color: #e2e8f0;
+   font-size: 30px;
+}
+
+#ach-title:hover {
+   color: #5eead4;
 }
 
 .work-experience, .work-experience2 {
@@ -269,6 +301,18 @@ body {
    display: flex;
    flex-wrap: wrap;
    gap: 8px;
+}
+
+.kras_diplom, .static, .cert, .winter {
+   display: flex;
+   width: fit-content;
+   gap: 9px;
+   background-color: rgba(45, 212, 191, 0.1);
+   color: #5eead4;
+   padding: 11px 15px;
+   border-radius: 20px;
+   font-size: 0.75rem;
+   font-weight: bold;
 }
 
 .tag {
@@ -632,4 +676,52 @@ body {
    display: inline-flex;
    align-items: center;
    gap: 8px;
+}
+
+
+.award, .award2, .award3, .award4 {
+   display: flex;
+   flex-direction: column;
+   color: #B0E0E6 !important;
+   position: relative;
+   margin-left: auto;
+   margin-top: 15px !important;
+   margin-bottom: 15px !important;
+   width: fit-content;
+   margin-left: auto;
+   cursor: pointer;
+}
+
+.kras, .static_photo, .cert_photo, .winter_photo {   
+   position: absolute;
+   z-index: 999;
+   opacity: 0;
+   pointer-events: none;
+   transition: 0.3s ease;
+   left: 50%;   
+   bottom: 30px; 
+   transform: translateX(-50%); 
+   width: 300px;
+   height: auto;
+   border: 2px solid #5eead4;
+}
+
+.award:hover .kras {
+    opacity: 1;
+    bottom: 40px;
+}
+
+.award2:hover .static_photo {
+    opacity: 1;
+    bottom: 40px;
+}
+
+.award3:hover .cert_photo {
+    opacity: 1;
+    bottom: 80px;
+}
+
+.award4:hover .winter_photo {
+    opacity: 1;
+    bottom: 60px;
 }
