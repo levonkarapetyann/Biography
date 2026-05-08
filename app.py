@@ -89,12 +89,23 @@ def index():
 @app.route('/admin')
 @login_required
 def admin():
-    return render_template('admin.html')
+    users_from_db = db.session.query(Messages.username).order_by(Messages.id.desc()).distinct().limit(3).all()
+
+    existing_users = []
+    for user in users_from_db:
+        name = user[0]
+        sid = user_sessions.get(name, None)
+        existing_users.append({
+            'username': name,
+            'sid': sid
+        })
+    existing_users.sort(key=lambda x: x['sid'] is not None, reverse=True)
+    return render_template('admin.html', existing_users=existing_users)
 
 @app.route('/get_users')
 @login_required
 def get_users():
-    return jsonify(list(user.sessions.items()))
+    return jsonify(user_session)
 
 @app.route('/logout')
 @login_required

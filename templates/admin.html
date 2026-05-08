@@ -13,7 +13,16 @@ Admin panel
 <div id="admin-panel">
    <div id="user-list">
       <h3>Active users</h3>
-      <div id="users"></div>
+      <div id="users">
+         {% for user in existing_users %}
+             <div class="user-item"
+                id="user-{{ user.username }}"
+                style="cursor: pointer; padding: 10px; border-bottom: 1px solid #1E90FF; background-color: #f7f5f5;"
+                onclick="selectUser('{{ user.username }}', '{{ user.sid }}')">
+                {{ user.username }}
+             </div>
+          {% endfor %}
+      </div>
    </div>
    <div id="chat-panel">
       <div id="admin-log"></div>
@@ -35,7 +44,10 @@ Admin panel
         userName = name;
         document.getElementById('replying-to').textContent = `Replying to: ${name}`;
         document.querySelectorAll('.user-item').forEach(el => el.classList.remove('active'));
-        document.getElementById('user-' + sid)?.classList.add('active');
+        const selectedEl = document.getElementById('user-' + name);
+        if (selectedEl) {
+            selectedEl.classList.add('active');
+        }
     }
     document.addEventListener('DOMContentLoader', () => {
         const adminInput = document.getElementById('admin-input');

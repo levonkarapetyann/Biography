@@ -143,3 +143,8 @@ h1 {
     padding: 8px; 
 }
 
+.user-item.active {
+    background-color: #007bff !important;
+    color: white !important;
+    opacity: 1 !important;
+}
