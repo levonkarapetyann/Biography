@@ -4,7 +4,7 @@
    margin: 0;
    padding: 0;
    box-sizing: border-box;
-   font-family: "Popins", sans-serif;
+   font-family: "Poppins", sans-serif;
 }
 
 html {
@@ -20,14 +20,16 @@ body::-webkit-scrollbar {
 
 body {
    background: #0d111d;
+   overflow-x: hidden;
+   color: #94a3b8;
 }
 
 .fix {
    color: #e2e8f0;
-   margin: 50px;
+   margin: 0;
    position: sticky;
    top: 80px;
-   width: 500px;
+   width: 40%;
    flex-shrink: 0;
    padding: 20px;
 }
@@ -156,6 +158,8 @@ body {
    flex-grow: 1;
    display: flex;
    flex-direction: column;
+   gap: 60px;
+   width: 50%;
 }
 
 .study1, .study2, .study3 {
@@ -195,6 +199,10 @@ body {
 
 .hovv:hover * {
    color: #5eead4 !important;
+}
+
+.study1, .what, #ach-title, .nav-link, .nav-text, .nav-line {
+   transition: all 0.3s ease-in-out;
 }
 
 .about-study1 {
