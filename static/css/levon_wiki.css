@@ -748,3 +748,69 @@ body {
   transform: translateY(0);
   visibility: visible;
 }
+
+@media (max-width: 768px) {
+   .main {
+      flex-direction: column;
+      padding: 20px;
+   }
+
+   .fix {
+      position: relative;
+      top: 0;
+      width: 100%;
+      margin: 0 0 40px 0;
+      padding: 0;
+   }
+
+   .nav-menu {
+      display: none;
+   }
+
+   .scroll, .right {
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+   }
+
+   .about1, .about2, .about3, .study1, .study2, .what, #ach-title, 
+   .about-study1, .work-experience, .work-experience2 {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      max-width: 100%;
+      text-align: left;
+   }
+
+
+   .kras, .static_photo, .cert_photo, .winter_photo {
+      position: relative; 
+      left: 0;
+      transform: none;
+      width: 100%; /
+      opacity: 1; 
+      bottom: 0;
+      margin-top: 10px;
+      pointer-events: auto;
+   }
+
+   .gridd {
+      position: relative; 
+      flex-direction: column;
+      align-items: flex-start;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      gap: 15px;
+      margin-top: 30px;
+   }
+   
+   .number, .loc {
+      position: relative; 
+      left: 0 !important;
+   }
+
+   .bxl-linkedin-square, .bxl-instagram, .bxl-github, .bxl-telegram {
+      position: static; 
+      margin-right: 15px;
+   }
+}
