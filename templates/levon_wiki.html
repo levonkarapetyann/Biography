@@ -164,21 +164,18 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const observerOptions = {
-        threshold: 0.15 // Элемент проявится, когда 15% его высоты будет видно
+
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("active");
-                // Если хотите, чтобы анимация сработала только один раз, 
-                // можно перестать наблюдать за элементом:
-                // observer.unobserve(entry.target);
+
             }
         });
     }, observerOptions);
 
-    // Запускаем наблюдение за всеми элементами с классом .reveal
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });
 </script>
