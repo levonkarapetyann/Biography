@@ -40,19 +40,19 @@
    </div>
    <div class="scroll">
       <div id="about" class="about">
-          <h1 class="what"><b>What I Do</b></h1>
+          <div class="reveal"><h1 class="what"><b>What I Do</b></h1></div>
           <p class="about1">I am an Engineering Physics student at RAU specializing in Quantum Information.My background includes designing UAVs at Aerodynamic and winning first place at the Summer University program in Krasnoyarsk for an original engineering project. I excel at bridging the gap between mathematical theory and practical implementation.</p>
       </div>
       <div class="study">
          <div class="hovv">
-            <h1 class="study1"><b>Russian-Armenian University</b></h1>
+            <div class="reveal"><h1 class="study1"><b>Russian-Armenian University</b></h1></div>
             <h3 class="study2">Bachelor of Engineering Physics - Quantum Informatics</h3>
             <p class="study3"><b>2021 - Present</b></p>
          </div>
          <p class="about-study1">I am a student at the Russian-Armenian University, majoring in Quantum Informatics at the Faculty of Engineering Physics. My program combines a strong foundation in physics and mathematics with modern computational technologies. I focus on complex interdisciplinary challenges at the intersection of physics and programming.</p>
       </div>
       <div class="achievements">
-         <p id="ach-title"><b>ACHIEVEMENTS & AWARDS</b></p>
+         <div class="reveal"><p id="ach-title"><b>ACHIEVEMENTS & AWARDS</b></p></div>
          <p id="ach1"><b>Team Technical Project, Summer University (Krasnoyarsk, 2024)</b></p>
          <div class="award">
             <span class="kras_diplom"><b>Hover over to view the diploma.</b></span>
@@ -74,7 +74,7 @@
             <span class="winter"><b>Hover to view the certificate</b></span>
          </div>
       </div>
-      <div id="experience" class="work-experience">
+      <div id="experience" class="work-experience reveal">
          <div class="date">
             03/2026 - PRESENT
          </div>
@@ -95,7 +95,7 @@
             </div>
          </div>
       </div>
-      <div id="experience"class="work-experience2">
+      <div id="experience"class="work-experience2 reveal">
          <div class="date2">
             09/2021 - 12/2021
          </div>
@@ -107,7 +107,7 @@
             <p>designed and optimized UAV aerodynamic components, participated in prototyping and testing processes, and worked with Fusion 360 and Autodesk tools for 3D modeling and design.</p>
          </div>
       </div>
-      <div class="right">
+      <div class="right reveal">
          <div id="skills" class="skills-sect">
             <h2>Technical Skills</h2>
             <div class="setka">
@@ -128,7 +128,7 @@
                </div>
             </div>
          </div>
-         <div class="lang">
+         <div class="lang reveal">
             <h2>Languages</h2>
             <div class="lang-item">
                <div class="info">
@@ -161,6 +161,27 @@
     el.style.setProperty('--x', e.clientX + 'px');
     el.style.setProperty('--y', e.clientY + 'px');
 });</script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const observerOptions = {
+        threshold: 0.15 // Элемент проявится, когда 15% его высоты будет видно
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("active");
+                // Если хотите, чтобы анимация сработала только один раз, 
+                // можно перестать наблюдать за элементом:
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, observerOptions);
+
+    // Запускаем наблюдение за всеми элементами с классом .reveal
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+});
+</script>
 {% endblock %}
 {% endblock %}
 

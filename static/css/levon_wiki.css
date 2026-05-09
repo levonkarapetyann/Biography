@@ -733,3 +733,18 @@ body {
     opacity: 1;
     bottom: 60px;
 }
+
+
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  visibility: hidden;
+}
+
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+}
