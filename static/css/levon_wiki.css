@@ -524,7 +524,7 @@ body {
     text-align: center;
     color: var(--text-dim);
     padding-bottom: 10px;
-    opacity: 0.5;
+    opacity: 0.5
 }
 
 .hidden {
@@ -813,4 +813,27 @@ body {
       position: static; 
       margin-right: 15px;
    }
+}
+
+
+.download-btn {
+   display: inline-block;
+   padding: 12px 24px;
+   background-color: transparent;
+   color: #fff;
+   position: fixed;
+   border: 2px solid #7b46f6;
+   border-radius: 8px;
+   font-weight: 500;
+   left: 100px;
+   margin-top: 590px;
+   transition: all 0.3s ease;
+   cursor: pointer;
+   text-decoration: none;
+}
+
+.download-btn:hover {
+   background-color: #7b46f6;
+   color: #fff;
+   box-shadow: 0 0 15px rgba(123, 70, 246, 0.5);
 }
