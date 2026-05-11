@@ -8,6 +8,13 @@
 {% block body %}
 <div class="cursor"></div>
 <div class="fix-icon">
+   <div class="qubit-container">
+      <h2>Quantum State: <span id="qubit-value">|0⟩</span></h2>
+      <div class="qubit-sphere" onclick="collapseVector()">
+      <div class="electron"></div>
+   </div>
+   <small>Click to collapse wave function</small>
+   </div>
     <nav class="nav-menu">
         <a href="#about" class="nav-link">
            <span class="nav-line"></span>
@@ -180,6 +187,29 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 });
 </script>
+<script>function collapseVector() {
+    const display = document.getElementById('qubit-value');
+    const sphere = document.querySelector('.qubit-sphere');
+    const electron = document.querySelector('.electron'); 
+
+    electron.classList.remove('quantum-flicker');
+    sphere.style.animation = 'none';
+
+    const result = Math.random() > 0.5 ? '|0⟩' : '|1⟩';
+    display.innerText = result;
+    display.style.textShadow = '0 0 20px #fff'; 
+
+    setTimeout(() => {
+        electron.classList.add('quantum-flicker');
+        sphere.style.animation = 'rotate 4s linear infinite';
+        display.style.textShadow = 'none';
+        display.innerText = 'Superposition';
+    }, 1500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelector('.electron').classList.add('quantum-flicker');
+});</script>
 {% endblock %}
 {% endblock %}
 
