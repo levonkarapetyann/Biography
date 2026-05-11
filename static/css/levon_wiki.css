@@ -837,3 +837,106 @@ body {
    color: #fff;
    box-shadow: 0 0 15px rgba(123, 70, 246, 0.5);
 }
+
+
+:root {
+  --neon-color: #7b46f6; 
+}
+
+.qubit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: 'SF Mono', 'Courier New', monospace; 
+  margin: 50px 0;
+  text-align: center;
+}
+
+#qubit-value {
+  font-size: 1.5em;
+  font-weight: 200;
+  color: #fff;
+  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px var(--neon-color);
+  margin-bottom: 20px;
+  display: block;
+}
+
+.qubit-sphere {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  position: relative;
+  cursor: pointer;
+  
+  box-shadow: 
+    0 0 10px rgba(123, 70, 246, 0.2),
+    inset 0 0 25px rgba(123, 70, 246, 0.1);
+
+  animation: orbitRotate 15s linear infinite;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.electron {
+  width: 14px;
+  height: 14px;
+  background-color: #fff;
+  border-radius: 50%;
+
+  box-shadow: 
+    0 0 10px #fff,
+    0 0 20px #fff,
+    0 0 30px var(--neon-color),
+    0 0 40px var(--neon-color);
+    
+  animation: electronPulse 1s ease-in-out infinite alternate;
+}
+
+.qubit-container small {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8em;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  margin-top: 20px;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.qubit-sphere:hover + small {
+  opacity: 1;
+}
+
+@keyframes orbitRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes electronPulse {
+  from { transform: scale(0.95); opacity: 0.9; }
+  to { transform: scale(1.05); opacity: 1; }
+}
+
+.qubit-container {
+   position: fixed;
+   top: 330px;
+   left: 500px;
+}
+
+.quantum-flicker {
+    animation: jitter 0.15s infinite alternate, glow 0.2s infinite alternate;
+}
+
+@keyframes jitter {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(2px, -2px); }
+}
+
+@keyframes glow {
+    0% { filter: brightness(1) blur(0px); box-shadow: 0 0 10px #7b46f6; }
+    100% { filter: brightness(1.5) blur(1px); box-shadow: 0 0 25px #7b46f6, 0 0 40px #fff; }
+}
